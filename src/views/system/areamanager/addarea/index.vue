@@ -88,14 +88,14 @@ export default {
   data() {
     return {
       areaForm: {
-        areaName:null,//区域名称
-        areaSpell:null,
-        areaCode:null,
-        areaType:null,
+        areaName: null, //区域名称
+        areaSpell: null,
+        areaCode: null,
+        areaType: null,
       },
-      areaOptions:[],//区域
-      areaTypeOptions:[],
-      rules:{
+      areaOptions: [], //区域
+      areaTypeOptions: [],
+      rules: {
         areaName: [
           { required: true, message: "请填写区域名称", trigger: "blur" },
         ],
@@ -111,7 +111,7 @@ export default {
         areaType: [
           { required: true, message: "请填写区域类型", trigger: "blur" },
         ],
-      }
+      },
     };
   },
 };
@@ -122,7 +122,7 @@ export default {
   position: relative;
   padding: 24px;
   min-height: 896px;
-  .txt_title{
+  .txt_title {
     font-size: 16px;
     margin-bottom: 32px;
   }
