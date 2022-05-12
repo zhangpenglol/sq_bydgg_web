@@ -1,0 +1,64 @@
+
+
+
+/* 1.下拉框的滚动条的样式 */
+.el-select-dropdown__list{
+  max-height: 256px;
+  overflow-y: auto;
+}
+.el-select-dropdown__list::-webkit-scrollbar-thumb {
+  /* height: 8px;
+    滚动条不能设置高度：
+        原因猜测：  滚动条的高度有体现内容高度的一个含义，且能划多少与内容有关。自定义高度就不好操作了。
+  */  
+ 
+  background: #3757E2;
+  border-radius:10px;
+}
+
+.el-select-dropdown__list::-webkit-scrollbar{
+  width: 6px;
+  
+  background-color: transparent;
+}
+/* 按钮的样式 */
+.el-button--primary{
+  height: 40px;
+  width: 120px;
+  background-color: #3757E2 !important;
+  border-color:transparent;
+}
+.el-button--primary:hover{
+  background: rgba(55, 87, 226,0.7) !important;
+  
+}
+
+/* 文本按钮样式 */
+.el-button--text{
+color: #3757E2;
+}
+.el-button--text:hover {
+ color: rgba(55, 87, 226,0.7);
+}
+/* 下拉框icon样式 */
+.is-sesect-icon.el-select .el-input__suffix {
+  width: 40px;
+  right: 0;
+  background-color: #4A6BFA;
+}
+/* 表格样式 */
+.el-table__header th.el-table__cell{
+  background-color:rgb(236, 239, 247) ;
+}
+.el-table--enable-row-hover  .el-table__body tr:hover > td {
+  background-color: rgb(236, 239, 247) !important;
+}
+.el-table  .el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-table  .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #3757e2;
+  border-color: #3757e2;
+}
+.el-table .el-checkbox__input.is-focus .el-checkbox__inner {
+  border-color: #3757e2;
+}

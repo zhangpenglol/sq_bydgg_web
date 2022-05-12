@@ -1,0 +1,117 @@
+<template>
+  <div class="addrole_container card_box">
+    <div class="card_title">添加/修改角色信息</div>
+    <el-form
+      class="addroleForm"
+      ref="addroleFormRef"
+      :model="addroleForm"
+      :rules="rules"
+      label-width="80px"
+    >
+    <el-form-item label="角色名称" prop="deviceName">
+        <el-input
+          class="input_width1"
+          placeholder="请填写"
+          v-model="addroleForm.deviceName"
+        >
+        </el-input>
+      </el-form-item>
+      <el-form-item label="角色描述" prop="deviceCode">
+        <el-input
+          class="input_width1"
+          placeholder="请填写"
+          v-model="addroleForm.deviceCode"
+        >
+        </el-input>
+      </el-form-item>
+      <el-form-item label="配置系统" prop="deviceType">
+        <el-select
+          class="input_width1"
+          v-model="addroleForm.deviceType"
+          placeholder="请选择配置系统"
+        >
+          <el-option
+            v-for="item in deviceTypeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+       <el-form-item label="功能权限" prop="deviceType">
+        <el-select
+          class="input_width1"
+          v-model="addroleForm.deviceType"
+          placeholder="请选择配置系统"
+        >
+          <el-option
+            v-for="item in deviceTypeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      
+
+      <div class="btn_box">
+        <el-button type="primary" class="btn1">提交</el-button>
+        <el-button type="primary" @click="submitForm">取消</el-button>
+      </div>
+    </el-form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "addrole",
+  data() {
+    return {
+      addroleForm: {},
+    };
+  },
+  created() {},
+  methods: {},
+};
+</script>
+
+<style lang="scss" scoped>
+.addrole_container{
+    height: 100vh;
+    padding: 24px;
+    .card_title{
+        font-size: 16px;
+        color: #333333;
+        margin-bottom: 32px;
+    }
+}
+</style>
+
+<!--elementUI样式-->
+<style scoped>
+.el-input {
+  width: 380px;
+  height: 40px;
+  /*background: rgba(14, 147, 162, 0.32);*/
+  /*border-radius: 2px;*/
+}
+.el-input /deep/ .el-input__inner {
+  border: 1px solid #aaaaaa;
+}
+
+.el-select /deep/ .el-input{
+    width: 380px;
+    height: 40px;
+}
+
+.el-button {
+  width: 120px;
+  height: 40px;
+  background: #3757e2;
+  border-radius: 2px;
+  color: #fff;
+  border: 0;
+}
+</style>

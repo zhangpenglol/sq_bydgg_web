@@ -1,0 +1,130 @@
+<!--
+ * @Descripttion: 
+ * @Author: 李增辉
+ * @Date: 2022-04-13 09:46:52
+ * @LastEditors: 李增辉
+ * @LastEditTime: 2022-04-13 10:25:40
+-->
+
+<template>
+  <el-upload
+    style="width: 360px"
+    drag
+    action="#"
+    :limit="maxlimit"
+    multiple
+    class="xx-upload"
+    :http-request="upload_request"
+    :before-upload="before_upload"
+    :before-remove="before_remove"
+  >
+    <i class="el-icon-upload"></i>
+    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+    <div class="el-upload__tip" slot="tip">
+      {{ title }}
+    </div>
+  </el-upload>
+</template>
+<script>
+/**
+ * 初始化：
+ *       1.设置文件上传最大个数
+ *       2.设置file-list（用于显示上传文件的列表）？需要设置吗？有待商榷
+ * 交互：
+ *     1.监听before-upload，用于校验单文件内存大小，文件的格式，以及获取回调函数中的参数file封装为FormData，在发起请求的时候使用
+ *     2.监听upload_request上传成功后返回用户上传后的请求返回的地址对象。
+ *     3.
+ *       3.1监听before_remove，删除的时候把删除的对象传给父组件让父组件想办法删除(uid从上传之前里面获取，上传成功后的里面传uid，删除的时候也传这个uid)
+ *       3.2能否每次给的是所有的？ok就这样
+ */
+export default {
+  props: {
+    maxlimit: {
+      require: false,
+      type: Number,
+      default: 5,
+    },
+    title: {
+      require: false,
+      type: String,
+      default: "最多可上传5个附件,单个附件100M以内,支持jpg.png.pdf格式",
+    },
+    fileRulesType: {
+      require: false,
+      type: Array,
+      default: [".jpg", ".png", ".pdf"],
+    },
+    url: {
+      require: false,
+      type: String,
+      default: "https://dvwit.3xgc.net/core/uploadFile",
+    },
+  },
+  data() {
+    return {
+      formData: undefined,
+      uid: undefined,
+      resData: [],
+    };
+  },
+  methods: {
+    before_upload(file) {
+      const index = file.type.lastIndexOf("/");
+      const fileType = file.type.substring(index + 1).toLowerCase();
+      const isLegal = this.fileRulesType.join("").includes(fileType);
+      if (!isLegal) {
+        /**
+         * 提示文件格式不支持
+         */
+        return;
+      }
+      const isLt100M = file.size / 1024 / 1024 > 100;
+      if (isLt100M) {
+        /**
+         * 提示文件的大小不能大于100M
+         */
+        return;
+      }
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("fileType", "image");
+      this.formData = formData;
+      this.uid = file.uid;
+    },
+    upload_request() {
+      //等后端接口确定了后再实现
+      // const {
+      //   data: { path, id },
+      // } = await upload(formData);
+      // const item = {
+      //   path,
+      //   id,
+      //   uid: this.uid,
+      // };
+      // this.resData.push(item);
+      // this.$emit("getfileInfo", this.resData);
+    },
+    before_remove(file) {
+      //等后端接口确定了后再实现
+      // this.resData.forEach((item, index) => {
+      //   if (item.uid === file.uid) {
+      //     return this.resData.splice(index, 1);
+      //   }
+      // });
+      // this.$emit("getfileInfo", this.resData);
+    },
+  },
+};
+</script>
+<style scoped>
+.el-upload__tip,
+.xx-upload >>> .el-upload-list__item-name {
+  text-align: left;
+}
+.el-upload__text em {
+  color: #4a6bfa;
+}
+.xx-upload >>> .el-upload-dragger:hover {
+  border-color: #4a6bfa;
+}
+</style>

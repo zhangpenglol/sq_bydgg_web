@@ -1,0 +1,19 @@
+<template>
+  <div class="log_container">
+      
+  </div>
+</template>
+
+<script>
+export default {
+  name: "logmanager",
+  dta() {
+    return {};
+  },
+  created() {},
+  mounted: {},
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

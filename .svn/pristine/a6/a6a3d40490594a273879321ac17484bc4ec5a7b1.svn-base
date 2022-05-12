@@ -1,0 +1,312 @@
+<template>
+  <div class="pla_container card_box">
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tab-pane label="站点信息" name="first">
+        <el-form
+          class="siteForm"
+          ref="siteFormRef"
+          :model="siteForm"
+          :rules="rules"
+          label-width="120px"
+        >
+          <el-form-item label="配置系统" prop="deviceType">
+            <el-select
+              class="input_width1"
+              v-model="siteForm.deviceType"
+              placeholder="请选择配置系统"
+            >
+              <el-option
+                v-for="item in deviceTypeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="站点名称" prop="deviceName">
+            <el-input
+              class="input_width1"
+              placeholder="请填写"
+              v-model="siteForm.deviceName"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item label="站点简称" prop="deviceCode">
+            <el-input
+              class="input_width1"
+              placeholder="请填写"
+              v-model="siteForm.deviceCode"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item label="上传后台LOGO">
+            <el-upload
+              ref="upload"
+              :limit="1"
+              :action="this.Action"
+              list-type="picture-card"
+              :on-preview="handlePictureCardPreview"
+              :on-remove="handleRemove"
+              :before-upload="beforeUpload"
+              :file-list="userImagePath"
+              :on-success="handleSuccess"
+              :on-exceed="handleExceed"
+              :data="QiniuData"
+              :multiple="true"
+              accept=".jpg,.jpeg,.png,.JPG,.JPEG"
+            >
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible2">
+              <img width="100%" :src="dialogImageUrl" alt="" />
+            </el-dialog>
+            <div class="upload_txt">
+              <span>仅能上传一张，支持jpg、png格式，最大不要超过1M</span>
+            </div>
+          </el-form-item>
+          <el-form-item label="备案号" prop="deviceName">
+            <el-input
+              class="input_width1"
+              placeholder="请填写"
+              v-model="siteForm.deviceName"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item label="底部版权信息" prop="deviceCode">
+            <el-input
+              class="input_width1"
+              placeholder="请填写"
+              v-model="siteForm.deviceCode"
+            >
+            </el-input>
+          </el-form-item>
+
+          <div class="btn_box">
+            <el-button type="primary" class="btn1">提交</el-button>
+            <el-button type="primary" @click="submitForm">取消</el-button>
+          </div>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="安全设置" name="second">
+        <el-form :rules="rules" v-model="settingInfo">
+          <el-form-item label="前台禁止IP" label-width="100px">
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-input
+                  class="textArea"
+                  type="textarea"
+                  :rows="8"
+                  placeholder="请输入内容"
+                  v-model="settingInfo.webForbidIp"
+                >
+                </el-input>
+              </el-col>
+              <el-col :span="10">
+                <div class="areaTitle">
+                  <span
+                    >当用户处于本列表中的 IP
+                    地址时将无法访问本站点前台所有页面。 每个 IP
+                    一行，既可输入完整地址，也可只输入 IP 开头，例如
+                    "192.168."(不 含引号) 可匹配 192.168.0.0～192.168.255.255
+                    范围内的所有地址，留空为 所有 IP 均可访问</span
+                  >
+                </div>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="后台禁止IP" label-width="100px">
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-input
+                  class="textArea"
+                  type="textarea"
+                  :rows="8"
+                  placeholder="请输入内容"
+                  v-model="settingInfo.manageForbidIp"
+                >
+                </el-input>
+              </el-col>
+              <el-col :span="10">
+                <div class="areaTitle">
+                  <span
+                    >只有当管理员处于本列表中的 IP
+                    地址时才可以访问后台，列表以外的地址访
+                    问将无法访问，但仍可访问网站前端用户界面，请务必慎重使用本功能。
+                    每个 IP 一行，既可输入完整地址，也可只输入 IP 开头，例如
+                    "192.168."(不 含引号) 可匹配 192.168.0.0～192.168.255.255
+                    范围内的所有地址，留空为所 有 IP
+                    除明确禁止的以外均可访问系统设置</span
+                  >
+                </div>
+              </el-col>
+            </el-row>
+          </el-form-item>
+
+          <div class="tag_title1 tag"><span>登录安全</span></div>
+          <el-form-item label="后台登录安全" label-width="100px">
+            <el-radio-group v-model="settingInfo.secureLoginStatus">
+              <el-radio label="10">开启</el-radio>
+              <el-radio label="20">关闭</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="错误次数限制" label-width="100px">
+            <el-row>
+              <el-col :span="6">
+                <el-input
+                  type="number"
+                  placeholder="请输入内容"
+                  v-model="settingInfo.errorLimit"
+                  class="input-with-select input2"
+                >
+                  <template slot="append">次</template>
+                </el-input>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="错误上限处理" label-width="100px">
+            <el-radio-group v-model="settingInfo.processMode">
+              <el-radio label="10">开启</el-radio>
+              <el-radio label="20">关闭</el-radio>
+              <el-radio label="30">
+                <el-input
+                  type="number"
+                  placeholder="请填写"
+                  v-model="settingInfo.limitLogin"
+                  class="input-with-select input3"
+                >
+                  <template slot="append">小时</template> </el-input
+                ><span class="txtHeight">后可登录</span>
+              </el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <div class="tag_title2 tag"><span>SQL注入攻击防御</span></div>
+          <el-form-item label="对后台启用" label-width="100px">
+            <el-radio-group v-model="settingInfo.attackSwitch">
+              <el-radio label="10">开启</el-radio>
+              <el-radio label="20">关闭</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="禁止的SQL函数" label-width="100px">
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-input
+                  class="textArea"
+                  type="textarea"
+                  :rows="8"
+                  placeholder="d. file,hex.substrinaif,ord.char.ascii.mid,sleep"
+                  v-model="settingInfo.sqlFunction"
+                >
+                </el-input>
+              </el-col>
+              <el-col :span="10">
+                <div class="areaTitle">
+                  <span
+                    >推荐20次,小于10次的话,设置无效,因为会把正常用户屏蔽</span
+                  >
+                </div>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="禁止的SQL方法" label-width="100px">
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-input
+                  class="textArea"
+                  type="textarea"
+                  :rows="8"
+                  placeholder="intooutfile, intodumofile, unionselect, unionall.uniondis tinct,(select"
+                  v-model="settingInfo.sqlMethod"
+                >
+                </el-input>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item
+            label="
+禁止的SQL标记"
+            label-width="100px"
+          >
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-input
+                  class="textArea"
+                  type="textarea"
+                  :rows="8"
+                  placeholder="请输入内容"
+                  v-model="settingInfo.sqlSign"
+                >
+                </el-input>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="禁止注释符" label-width="100px">
+            <el-radio-group v-model="settingInfo.commentSwitch">
+              <el-radio label="10">开启</el-radio>
+              <el-radio label="20">关闭</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="禁止16进制符" label-width="100px">
+            <el-radio-group v-model="settingInfo.scaleSwitch">
+              <el-radio label="10">开启</el-radio>
+              <el-radio label="20">关闭</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitSettings">提交</el-button>
+            <el-button @click="callOff">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="数据导入" name="third"> </el-tab-pane>
+    </el-tabs>
+  </div>
+</template>
+
+<script>
+export default {
+  nmae: "platformSetting",
+  data() {
+    return {
+      activeName: "first",
+      siteForm: {},
+      settingInfo: {},
+    };
+  },
+  created() {},
+  methods: {},
+};
+</script>
+
+<style lang="scss" scoped>
+.pla_container {
+  padding: 24px;
+}
+</style>
+<style scoped>
+.el-input /deep/ .el-input__inner {
+  width: 380px;
+  height: 40px;
+}
+.el-select /deep/ .el-input {
+  width: 380px;
+}
+.el-select /deep/ .el-input__suffix {
+  width: 40px;
+  height: 40px;
+  right: 0;
+  background-color: #4a6bfa;
+}
+.el-select .el-input__inner {
+  width: 380px;
+}
+
+.el-tabs--card /deep/ .el-tabs__header {
+  margin-bottom: 32px;
+}
+.el-form-item {
+  margin-bottom: 16px;
+}
+</style>

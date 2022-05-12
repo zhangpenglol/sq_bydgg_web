@@ -1,0 +1,88 @@
+<template>
+  <div class="app_container card_box">
+    <el-form
+      class="areaForm"
+      ref="areaFormRef"
+      :model="areaForm"
+      :rules="rules"
+      label-width="120px"
+    >
+      <el-form-item label="配置系统" prop="deviceType">
+        <el-select
+          class="input_width"
+          v-model="areaForm.deviceType"
+          placeholder="请选择配置系统"
+        >
+          <el-option
+            v-for="item in deviceTypeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="站点名称" prop="deviceName">
+        <el-input
+          class="input_width"
+          placeholder="请填写"
+          v-model="areaForm.deviceName"
+        >
+        </el-input>
+      </el-form-item>
+      <el-form-item label="站点简称" prop="deviceCode">
+        <el-input
+          class="input_width"
+          placeholder="请填写"
+          v-model="areaForm.deviceCode"
+        >
+        </el-input>
+      </el-form-item>
+      <el-form-item label="备案号" prop="deviceName">
+        <el-input
+          class="input_width"
+          placeholder="请填写"
+          v-model="areaForm.deviceName"
+        >
+        </el-input>
+      </el-form-item>
+      <el-form-item label="底部版权信息" prop="deviceCode">
+        <el-input
+          class="input_width"
+          placeholder="请填写"
+          v-model="areaForm.deviceCode"
+        >
+        </el-input>
+      </el-form-item>
+
+      <div class="btn_box">
+        <el-button type="primary" class="btn1">提交</el-button>
+        <el-button type="primary" @click="submitForm">取消</el-button>
+      </div>
+    </el-form>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      areaForm: {},
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.app_container {
+  padding: 24px;
+  min-height: 896px;
+}
+</style>
+<style scope>
+.input_width {
+  width: 380px;
+  height: 40px;
+}
+</style>

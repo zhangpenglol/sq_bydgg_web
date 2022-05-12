@@ -1,0 +1,101 @@
+<!--
+ * @Descripttion: 
+ * @Author: 李增辉
+ * @Date: 2022-04-13 09:46:46
+ * @LastEditors: 李增辉
+ * @LastEditTime: 2022-04-13 16:15:17
+-->
+
+<template>
+  <div id="ddd" ref="caozuo" @click="handleCaozuo()">
+    <div class="ddd-title">...</div>
+    <div class="popup">
+      <slot></slot>
+    </div>
+  </div>
+</template>
+<script>
+/**
+ * html结构分析
+ */
+
+//   分析： html结构：
+//  三个点， 弹窗（设计自定义项，可绑定事件）
+// js： 初始化： 一个点
+// 交互： 点击点后弹出一个弹窗(弹窗为用户自定义的内容，.native自己绑定原生事件)
+export default {
+  methods: {
+    handleCaozuo() {
+      /**
+       * 利用事件的委托机制，使得下面的item组件点击后仍然可以触发此事件
+       *
+       */
+      const caozuo = this.$refs.caozuo;
+      caozuo.className
+        ? caozuo.classList.remove("expand")
+        : caozuo.classList.add("expand");
+    },
+  },
+};
+</script>
+
+<style scoped>
+#ddd {
+  display: inline-block;
+  margin: 1px 0px;
+
+  /* position: relative; */
+}
+.ddd-title {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  box-shadow: 0 0 0px rgba(0, 22, 120, 0.25);
+  font-weight: 600;
+  line-height: 32px;
+  text-align: center;
+}
+.popup {
+  min-height: 36px;
+  min-width: 100px;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: -68px;
+  top: 62px;
+  transform: scaleY(0);
+  transition: 0.25s;
+  transform-origin: center top;
+  opacity: 0;
+  z-index: 9999;
+}
+.popup::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  top: -6px;
+  right: 10px;
+  transform: rotate(45deg);
+  border-left: 1px solid rgba(0, 26, 141, 0.3);
+  border-top: 1px solid rgba(0, 26, 141, 0.3);
+}
+
+button {
+  display: block;
+}
+.expand .popup {
+  transform: scaleY(1);
+  opacity: 1;
+}
+.expand .ddd-title {
+  box-shadow: 0 0 3px rgba(0, 22, 120, 0.25);
+}
+</style>

@@ -1,0 +1,142 @@
+<template>
+  <div class="pla_container card_box">
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tab-pane label="站点信息" name="first">
+        <el-form
+          class="siteForm"
+          ref="siteFormRef"
+          :model="siteForm"
+          :rules="rules"
+          label-width="120px"
+        >
+          <el-form-item label="配置系统" prop="deviceType">
+            <el-select
+              class="input_width1"
+              v-model="siteForm.deviceType"
+              placeholder="请选择配置系统"
+            >
+              <el-option
+                v-for="item in deviceTypeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="站点名称" prop="deviceName">
+            <el-input
+              class="input_width1"
+              placeholder="请填写"
+              v-model="siteForm.deviceName"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item label="站点简称" prop="deviceCode">
+            <el-input
+              class="input_width1"
+              placeholder="请填写"
+              v-model="siteForm.deviceCode"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item label="上传后台LOGO">
+            <el-upload
+              ref="upload"
+              :limit="1"
+              :action="this.Action"
+              list-type="picture-card"
+              :on-preview="handlePictureCardPreview"
+              :on-remove="handleRemove"
+              :before-upload="beforeUpload"
+              :file-list="userImagePath"
+              :on-success="handleSuccess"
+              :on-exceed="handleExceed"
+              :data="QiniuData"
+              :multiple="true"
+              accept=".jpg,.jpeg,.png,.JPG,.JPEG"
+            >
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible2">
+              <img width="100%" :src="dialogImageUrl" alt="" />
+            </el-dialog>
+            <div class="upload_txt">
+              <span>仅能上传一张，支持jpg、png格式，最大不要超过1M</span>
+            </div>
+          </el-form-item>
+          <el-form-item label="备案号" prop="deviceName">
+            <el-input
+              class="input_width1"
+              placeholder="请填写"
+              v-model="siteForm.deviceName"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item label="底部版权信息" prop="deviceCode">
+            <el-input
+              class="input_width1"
+              placeholder="请填写"
+              v-model="siteForm.deviceCode"
+            >
+            </el-input>
+          </el-form-item>
+
+          <div class="btn_box">
+            <el-button type="primary" class="btn1">提交</el-button>
+            <el-button type="primary" @click="submitForm">取消</el-button>
+          </div>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="安全设置" name="second"> </el-tab-pane>
+      <el-tab-pane label="数据导入" name="third"> </el-tab-pane>
+    </el-tabs>
+  </div>
+</template>
+
+<script>
+export default {
+  nmae: "platformSetting",
+  data() {
+    return {
+      activeName: "first",
+      siteForm: {},
+    };
+  },
+  created() {},
+  methods: {},
+};
+</script>
+
+<style lang="scss" scoped>
+.pla_container {
+  height: 100vh;
+  padding: 24px;
+}
+</style>
+<style scoped>
+.el-input /deep/ .el-input__inner {
+  width: 380px;
+  height: 40px;
+}
+.el-select /deep/ .el-input {
+  width: 380px;
+}
+.el-select /deep/ .el-input__suffix {
+  width: 40px;
+  height: 40px;
+  right: 0;
+  background-color: #4a6bfa;
+}
+.el-select .el-input__inner {
+  width: 380px;
+}
+
+.el-tabs--card /deep/ .el-tabs__header{
+    margin-bottom: 32px;
+}
+.el-form-item{
+    margin-bottom: 16px;
+}
+</style>

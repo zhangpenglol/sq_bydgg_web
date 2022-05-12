@@ -1,0 +1,108 @@
+
+
+
+/* 1.el-select下拉框的滚动条的样式 */
+.el-select-dropdown__list{
+  max-height: 256px;
+  overflow-y: auto;
+}
+.el-select-dropdown__list::-webkit-scrollbar-thumb {
+  /* height: 8px;
+    滚动条不能设置高度：
+        原因猜测：  滚动条的高度有体现内容高度的一个含义，且能划多少与内容有关。自定义高度就不好操作了。
+  */  
+ 
+  background: #3757E2;
+  border-radius:10px;
+}
+
+.el-select-dropdown__list::-webkit-scrollbar{
+  width: 6px;
+  
+  background-color: transparent;
+}
+/*
+*el-cascader滚动条样/文字/选中按钮的样式
+*/
+.el-scrollbar__thumb{
+  background-color:#3757E2
+}
+.el-cascader-node.in-active-path, .el-cascader-node.is-active, .el-cascader-node.is-selectable.in-checked-path{
+  color: #3757E2;
+}
+.el-radio__input.is-checked .el-radio__inner{
+  border-color: #3757E2;
+  background: #3757E2;
+}
+/* 按钮的样式 */
+.el-button--primary{
+  height: 40px;
+  width: 120px;
+  background-color: #3757E2 !important;
+  border-color:transparent;
+}
+.el-button--primary:hover{
+  background: rgba(55, 87, 226,0.7) !important;
+  
+}
+
+/* 文本按钮样式 */
+.el-button--text{
+color: #3757E2;
+}
+.el-button--text:hover {
+ color: rgba(55, 87, 226,0.7);
+}
+/* 下拉框icon样式 */
+.is-sesect-icon.el-select .el-input__suffix {
+  width: 40px;
+  right: 0;
+  background-color: #4A6BFA;
+}
+/* 表格样式 */
+.el-table thead{
+  color: #333333;
+}
+.el-table__header th.el-table__cell{
+  background-color:rgb(236, 239, 247) ;
+}
+.el-table--enable-row-hover  .el-table__body tr:hover > td {
+  background-color: rgb(236, 239, 247) !important;
+}
+.el-table  .el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-table  .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #3757e2;
+  border-color: #3757e2;
+}
+.el-table .el-checkbox__input.is-focus .el-checkbox__inner {
+  border-color: #3757e2;
+}
+/*
+*设计稿上为222px
+*/
+.el-cascader,.el-select{
+  width: 222px;
+  margin-right: 10px;
+}
+
+
+/*
+*分页中的下拉框的宽度继承，不设置固定的宽度
+*/
+.el-pagination .el-select{
+  width: inherit;
+}
+/**
+*解决table的操作弹出框被表格隐藏的现象
+*/
+.el-table,.el-table__body-wrapper,.el-table .cell{
+ overflow: visible;
+}
+
+/*
+*输入框等聚焦状态时的样式
+**/
+.el-input.is-active .el-input__inner, .el-input__inner:focus,.el-select .el-input.is-focus .el-input__inner,.el-cascader .el-input .el-input__inner:focus, .el-cascader .el-input.is-focus .el-input__inner {
+  border-color:#3757E2
+}
