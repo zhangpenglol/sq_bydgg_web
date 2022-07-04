@@ -1,0 +1,36 @@
+import http from "@/utils/request";
+//查询复垦项目管理
+export function findLandReclamationProgress(params) {
+  return http({
+    method: "get",
+    url: "/idlcore/findLandReclamationProgress",
+    params,
+  });
+}
+
+//删除复垦项目管理
+export function deleteLandReclamationProgress(id) {
+  return http({
+    method: "delete",
+    url: "/idlcore/deleteLandReclamationProgress",
+    params: { id },
+  });
+}
+
+//新增复垦项目管理
+export function saveLandReclamationProgress(obj) {
+  return http({
+    method: "post",
+    url: "/idlcore/saveLandReclamationProgress",
+    data: obj,
+  });
+}
+
+//修改复垦进度
+export function updateLandReclamationProgress(obj) {
+  return http({
+    method: "put",
+    url: "/idlcore/updateLandReclamationProgress",
+    data: obj,
+  });
+}

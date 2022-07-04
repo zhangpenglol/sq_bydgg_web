@@ -1,0 +1,6 @@
+import Mock from "mockjs";
+Mock.mock("/specialManage/plan/findSpecialManage", "get", {
+  data: [6, 6, 6, 6],
+  status: 200,
+  message: "success",
+});

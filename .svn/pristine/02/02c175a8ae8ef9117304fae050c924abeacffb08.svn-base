@@ -1,0 +1,186 @@
+<template>
+  <div class="app_container card_box">
+    <div class="txt_title">新增/修改区域</div>
+    <el-form
+      class="areaForm"
+      ref="areaFormRef"
+      :model="areaForm"
+      :rules="rules"
+    >
+      <el-form-item label="区域名称" prop="areaName">
+        <el-input
+          class="input_width"
+          placeholder="请填写"
+          v-model="areaForm.areaName"
+        >
+        </el-input>
+      </el-form-item>
+      <el-form-item label="区域拼音" prop="areaSpell">
+        <el-input
+          class="input_width"
+          placeholder="请填写"
+          v-model="areaForm.areaSpell"
+        >
+        </el-input>
+      </el-form-item>
+      <el-form-item label="区域编码" prop="areaCode">
+        <el-input
+          class="input_width"
+          placeholder="请填写"
+          v-model="areaForm.deviceName"
+        >
+        </el-input>
+      </el-form-item>
+
+      <el-form-item label="上级区域" prop="areaParent">
+        <el-select
+          class="input_width"
+          v-model="areaForm.areaParent"
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="item in areaOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="区域类型" prop="areaType">
+        <el-select
+          class="input_width"
+          v-model="areaForm.areaType"
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="item in areaTypeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="经纬度" prop="deviceName">
+        <el-input
+          class="input_width"
+          placeholder="请填写"
+          v-model="areaForm.deviceName"
+        >
+        </el-input>
+      </el-form-item>
+
+      <div class="btn_box">
+        <el-button class="btn_width btn_bgc1">提交</el-button>
+        <el-button class="btn_width btn_bgc2" @click="submitForm"
+          >取消</el-button
+        >
+      </div>
+    </el-form>
+  </div>
+</template>
+
+<script>
+import {findArcSysSrea,findAreaCode,addAndUpdateAreaList,deleteAllAreaList} from "@/api/area.js";
+export default {
+  data() {
+    return {
+      areaForm: {
+        areaName: null, //区域名称
+        areaSpell: null,
+        areaCode: null,
+        areaType: null,
+      },
+      areaOptions: [], //区域
+      areaTypeOptions: [],
+      rules: {
+        areaName: [
+          { required: true, message: "请填写区域名称", trigger: "blur" },
+        ],
+        areaSpell: [
+          { required: true, message: "请填写区域拼音", trigger: "blur" },
+        ],
+        areaCode: [
+          { required: true, message: "请填写区域编码", trigger: "blur" },
+        ],
+        areaParent: [
+          { required: true, message: "请填写上级区域", trigger: "blur" },
+        ],
+        areaType: [
+          { required: true, message: "请填写区域类型", trigger: "blur" },
+        ],
+      },
+    };
+  },
+  created(){
+
+  },
+  methods:{
+    
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.app_container {
+  position: relative;
+  padding: 24px;
+  min-height: 896px;
+  .txt_title {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  .btn_box {
+    position: fixed;
+    bottom: 94px;
+    .btn_bgc1 {
+      background: #3757e2;
+      color: #ffffff;
+    }
+    .btn_bgc2 {
+      border: 1px solid #aaaaaa;
+    }
+    .btn_width {
+      width: 104px;
+      height: 40px;
+      font-size: 14px;
+      border-radius: 2px 2px 2px 2px;
+    }
+  }
+}
+.input_width {
+  width: 380px;
+  height: 40px;
+}
+</style>
+<style scoped>
+.el-input /deep/ .el-input__inner {
+  width: 380px;
+  height: 40px;
+}
+.el-select /deep/ .el-input {
+  width: 380px;
+}
+.el-select /deep/ .el-input__suffix {
+  width: 40px;
+  height: 40px;
+  right: 0;
+  background-color: #4a6bfa;
+}
+.el-select .el-input__inner {
+  width: 380px;
+}
+
+.el-tabs--card /deep/ .el-tabs__header {
+  margin-bottom: 32px;
+}
+.el-form-item {
+  margin-bottom: 16px;
+}
+.el-form /deep/ .el-form-item__label {
+  width: 86px;
+}
+</style>

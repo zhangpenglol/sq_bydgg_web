@@ -1,0 +1,13 @@
+import request from "@/utils/request.js";
+import md5 from "js-md5";
+
+export function login(params) {
+  return request({
+    url:
+      "/idlcore/login?username=" +
+      params.name +
+      "&password=" +
+      md5(`${params.pwd}`) ,
+    method: "get",
+  });
+}

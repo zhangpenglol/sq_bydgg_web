@@ -1,0 +1,26 @@
+import http from "@/utils/request";
+//查询区域数据
+export function findArcSysArea() {
+  return http({
+    methods: "get",
+    url: "/idlcore/findArcSysArea",
+  });
+}
+
+//查询数据字典不分页
+export function findDict(parentId) {
+  return http({
+    methods: "get",
+    url: "/idlcore/findDict",
+    params: { parentId },
+  });
+}
+
+//查询数据字典
+export function findDictItem(parentId) {
+  return http({
+    methods: "get",
+    url: "/idlcore/findDict",
+    params: { parentId },
+  });
+}

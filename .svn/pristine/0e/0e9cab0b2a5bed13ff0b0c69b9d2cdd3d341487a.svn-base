@@ -1,0 +1,25 @@
+import http from "@/utils/request";
+//查询拆旧地块
+export function findLandDemolitionOld(params) {
+  return http({
+    method: "get",
+    url: "/idlcore/findLandDemolitionOld",
+    params,
+  });
+}
+//查询拆旧地块通过实施ID
+export function findLandDemolitionOldByExecuteId(id) {
+  return http({
+    method: "get",
+    url: "/idlcore/findLandDemolitionOldByExecuteId",
+    params: { executeId: id },
+  });
+}
+//根据id查询拆旧地块详情
+export function findOldLandDetailById(id) {
+  return http({
+    method: "get",
+    url: "/idlcore/findOldLandDetailById",
+    params: { id: id },
+  });
+}

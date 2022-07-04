@@ -1,0 +1,235 @@
+<!--
+ * @Descripttion: 
+ * @Author: 李增辉
+ * @Date: 2022-04-13 13:45:14
+ * @LastEditors: 李增辉
+ * @LastEditTime: 2022-04-14 09:55:19
+-->
+<template>
+  <div>
+    <div class="container-search">
+      <div>
+        <el-select placeholder="所属区域" v-model="queryParmas.region">
+          <el-option
+            v-for="item in regionOptions"
+            :key="item.regionCode"
+            :label="item.regionName"
+            :value="item.regionCode"
+          >
+          </el-option>
+        </el-select>
+        <el-select placeholder="规划期(年)" v-model="quetyPlanDate">
+          <el-option
+            v-for="item in planDateOptions"
+            :key="item.itemCode"
+            :label="item.itemCode"
+            :value="item.itemValue"
+          >
+          </el-option>
+        </el-select>
+      </div>
+      <div>
+        <el-button
+          type="primary"
+          icon="iconfont icon-chaxun"
+          @click="handelSearch"
+          >查询</el-button
+        >
+        <el-button
+          type="primary"
+          icon="iconfont icon-zhongzhi"
+          @click="resetQuery"
+          >重置</el-button
+        >
+      </div>
+    </div>
+    <div class="container-main">
+      <div class="table-handles">
+        <el-button
+          type="primary"
+          icon="iconfont icon-addNode"
+          @click="
+            $router.push({ name: 'addsubject', params: { type: 'isAdd' } })
+          "
+          >新增</el-button
+        >
+        <el-button type="primary" icon="iconfont icon-shanchu">删除</el-button>
+      </div>
+      <el-table
+        v-loading="loading"
+        ref="singleTable"
+        :data="tableData"
+        @current-change="handleCurrentChange"
+      >
+        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column type="index" width="70" label="序号">
+        </el-table-column>
+        <el-table-column property="planName" label="规划名称">
+        </el-table-column>
+        <el-table-column property="regionName" label="所属区域">
+        </el-table-column>
+        <el-table-column label="规划期（年）">
+          <template slot-scope="scope">
+            {{ `${scope.row.startYear}-${scope.row.endYear} ` }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          property="demolishedArea"
+          label="农村建设用地拆旧区总面积（公顷）"
+        >
+        </el-table-column>
+        <el-table-column property="reclamationArea" label="复垦面积（公顷）">
+        </el-table-column>
+        <el-table-column property="balanceArea" label="建新面积（公顷）">
+        </el-table-column>
+        <el-table-column property="surplusArea" label="结余面积（公顷）">
+        </el-table-column>
+        <el-table-column property="address" label="地块上图"> </el-table-column>
+        <el-table-column property="address">
+          <template slot="header" slot-scope="scope">
+            <div class="table-caozuo">
+              <span>操作</span>
+              <i class="iconfont icon-xitongweihu"></i>
+            </div>
+          </template>
+          <template slot-scope="scope">
+            <el-dropdown
+              trigger="click"
+              @command="(type) => handleDropdownChange(type, scope.row)"
+            >
+              <span class="el-dropdown-link">
+                <i class="ddd-title">...</i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  icon="iconfont icon-xiangqingchakan"
+                  command="see"
+                  >查看</el-dropdown-item
+                >
+                <el-dropdown-item icon="iconfont icon-xiugai" command="update"
+                  >修改</el-dropdown-item
+                >
+                <el-dropdown-item icon="iconfont icon-shanchu" command="delete"
+                  >删除</el-dropdown-item
+                >
+<!--                <el-dropdown-item-->
+<!--                  icon="iconfont icon-zhandianditu"-->
+<!--                  command="map"-->
+<!--                  >地图审查</el-dropdown-item-->
+<!--                >-->
+              </el-dropdown-menu>
+            </el-dropdown>
+          </template>
+        </el-table-column>
+      </el-table>
+      <xx-pagination
+        @getPagination="getPagination"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        :limit="queryParmas.rows"
+      />
+    </div>
+  </div>
+</template>
+<script>
+import { findSpecialManage, deleteSpecialManage } from "@/api/subjectPlan";
+import { findArcSysArea, findDictDetail } from "@/api/common";
+export default {
+  data() {
+    return {
+      loading: false,
+      queryParmas: {
+        page: 1,
+        rows: 10,
+        regionCode: "",
+        startYear: "",
+        endYear: "",
+      },
+      regionOptions: [],
+      planDateOptions: [],
+      tableData: [],
+      total: 0,
+    };
+  },
+  created() {
+    this.init();
+  },
+  computed: {
+    quetyPlanDate: {
+      get: function () {
+        return "";
+      },
+      set: function (newValue) {
+        console.log(
+          newValue,
+          "将传递的数值解析为传递的查询参数中的queryParmas.startYear,queryParmas.en  dYear "
+        );
+      },
+    },
+  },
+
+  methods: {
+    init() {
+      this.getList();
+      this.getRegion();
+      this.getDict();
+    },
+    getRegion() {
+      findArcSysArea().then((res) => {
+        this.regionOptions = res.data;
+      });
+    },
+    getDict() {
+      findDictDetail("ghq").then((res) => {
+        this.planDateOptions = res.data;
+      });
+    },
+    handelSearch() {},
+    resetQuery() {},
+    getList() {
+      this.loading = true;
+      findSpecialManage(this.queryParmas).then((res) => {
+        console.log(res, "findSpecialManage(this.queryParmas).then((res) => {");
+        this.tableData = res.data;
+        this.total = res.total;
+        this.loading = false;
+      });
+    },
+    getPagination({ limit, page }) {
+      console.log(limit);
+      this.queryParmas.rows = limit;
+      this.queryParmas.page = page;
+      this.getList();
+    },
+    handleDelete(row) {
+      console.log("666");
+      const id = row.id || "";
+      if (id) {
+      } else {
+      }
+    },
+    handleCurrentChange(){},
+    handleDropdownChange(type, data) {
+      if (type === "see") {
+        this.$router.push({
+          name: "addsubject",
+          params: { type: "isUpdate", id: data.id },
+        });
+      } else if (type === "update") {
+        this.$router.push({
+          name: "addsubject",
+          params: { type: "isUpdate", id: data.id },
+        });
+      } else if (type === "delete") {
+        deleteSpecialManage(data.id).then((res) => {
+          this.getList();
+        });
+      } else if (type === "map") {
+      }
+    },
+  },
+};
+</script>
+<style scoped lang="scss">
+
+</style>

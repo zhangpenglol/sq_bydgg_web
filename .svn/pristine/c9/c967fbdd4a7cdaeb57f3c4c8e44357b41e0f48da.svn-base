@@ -1,0 +1,91 @@
+@import url('./amend-element-ui.css');
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+}
+.container-search{  //layout的main区域的搜索条件区域
+  margin-bottom: 24px;
+  padding: 12px 24px;
+  background-color: #ffff;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 0 4px  rgba(0,13,70,0.1);
+  font-size: 14px;
+  color: #333333;
+  .iconfont{
+    font-size: 12px;
+  }
+}
+.container-main{  //表格的主体区域
+  background-color: #ffff;
+  padding: 24px;
+  box-shadow: 0 0 4px  rgba(0,13,70,0.1);
+}
+.table-handles{  //表格上的操作栏
+  margin-bottom: 24px;
+  .iconfont{
+    font-size: 12px;
+  }
+  .icon-shanchu{ //删除的额外坐下调整
+    font-size: 14px;
+  }
+}
+.iconfont {  //字体图标的样式
+  font-weight: normal;
+  font-size: inherit;
+  margin-right: 5px;
+}
+
+/*
+*表格中操作栏的表头样式
+*
+*/
+.table-caozuo{
+  color: #3757E2;
+}
+.table-caozuo span{
+  margin-right: 8px;
+}
+
+/*
+*删除的文本按钮
+*/
+.delete-icon{
+  color:rgb(255, 67, 67)
+}
+.delete-icon:hover{
+  color:rgba(255, 67, 67,0.7)
+}
+/*
+*管理页面输入框的常规宽度设置
+*/
+.search-input{
+  width: 188px;
+  margin-left: 8px;
+  margin-right: 10px;
+}
+
+/*
+*管理页面查询栏第二行的输入栏样式
+*/
+.container-search-secound{
+  margin-top: 24px;
+}
+.container-search-secound-keep{
+  display:  none;
+}
+/*
+*解决table隐藏超出内容后，操作的弹出无法显示
+*/
+.caozuo-column{
+  // overflow: visible;
+
+}
+//操作的点点
+.ddd-title{
+  font-size:24px;
+  color: #3757E2;
+  cursor:pointer;
+}

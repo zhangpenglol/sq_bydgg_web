@@ -1,0 +1,34 @@
+import http from "@/utils/request";
+//专项规划管理查询接口
+export function findSpecialManage(params) {
+  return http({
+    methods: "get",
+    url: "/idlcore/findLandSpecialPlan",
+    params,
+  });
+}
+//专项规划管理删除接口
+export function deleteSpecialManage(id) {
+  return http({
+    methods: "delete",
+    url: "/idlcore/deleteLandSpecialPlan",
+    params: { id },
+  });
+}
+//新增专项规划管理
+export function saveLandSpecialPlan(ojb) {
+  return http({
+    methods: "post",
+    url: "/idlcore/saveLandSpecialPlan",
+    data: ojb,
+  });
+}
+
+//修改专项规划管理
+export function updateLandSpecialPlan(obj) {
+  return http({
+    methods: "put",
+    url: "/idlcore/updateLandSpecialPlan",
+    data: obj,
+  });
+}

@@ -1,0 +1,77 @@
+<template>
+  <div class="ReclamationPlan-container">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="复垦前" name="first"></el-tab-pane>
+      <el-tab-pane label="复垦中" name="second"></el-tab-pane>
+      <el-tab-pane label="复垦后" name="third"></el-tab-pane>
+    </el-tabs>
+    <el-table :data="tableData">
+      <el-table-column prop="date" label="位置(经纬度)"> </el-table-column>
+      <el-table-column prop="name" label="方位"> </el-table-column>
+      <el-table-column prop="address" label="现状描述"> </el-table-column>
+      <el-table-column prop="name" label="照片"> </el-table-column>
+      <el-table-column prop="address" label="进度上报日期"> </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button type="text" icon="iconfont icon-xiugai">修改</el-button>
+          <el-button
+            type="text"
+            class="delete-icon"
+            icon="iconfont icon-shanchu"
+            >删除</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 ",
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路",
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路",
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路",
+        },
+      ],
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.ReclamationPlan-container {
+  .el-table {
+    width: 70%;
+  }
+}
+</style>
+<style scoped>
+/* 复垦前复垦中复垦后  开始*/
+.ReclamationPlan-container >>> .el-tabs__nav-scroll {
+  border-left: 0px !important;
+  border-right: 0px !important;
+}
+.ReclamationPlan-container >>> .el-tabs__nav-wrap::after {
+  background-color: transparent;
+}
+/* 复垦前复垦中复垦后  结束*/
+</style>

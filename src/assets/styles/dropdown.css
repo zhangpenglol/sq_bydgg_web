@@ -1,0 +1,11 @@
+.ddd-title {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  box-shadow: 0 0 0px rgba(0, 22, 120, 0.25);
+  font-weight: 600;
+  line-height: 32px;
+  text-align: center;
+  padding: 5px 8px;
+}

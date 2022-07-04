@@ -1,0 +1,17 @@
+import http from "@/utils/request";
+//专项规划管理查询接口
+export function findSpecialManage(params) {
+  return http({
+    methods: "get",
+    url: "/idlcore/specialManage/plan/findSpecialManage",
+    params,
+  });
+}
+//专项规划管理删除接口
+export function deleteSpecialManage(id) {
+  return http({
+    methods: "delete",
+    url: "/idlcore/specialManage/plan/deleteSpecialManage",
+    params: { id },
+  });
+}

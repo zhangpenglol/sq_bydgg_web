@@ -1,0 +1,9 @@
+import http from "@/utils/request";
+//查询拆旧地块
+export function findLandDemolitionOld(params) {
+  return http({
+    method: "get",
+    url: "/idlcore/findLandDemolitionOld",
+    params,
+  });
+}
